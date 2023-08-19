@@ -13,8 +13,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-NewsBlog-NewsBlogTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-NewsBlog-NewsBlogTests.a */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		7CEE86AE369A46449747E31D /* Nunito.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 26480D5C3D0642AB94A1C17F /* Nunito.ttf */; };
+		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		F56A37A08D2C473DA50A063F /* NewYork.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DFC5E66CDEB64466826ADD86 /* NewYork.ttf */; };
 /* End PBXBuildFile section */
 
@@ -39,15 +39,15 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NewsBlog/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NewsBlog/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-NewsBlog-NewsBlogTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewsBlog-NewsBlogTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26480D5C3D0642AB94A1C17F /* Nunito.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Nunito.ttf; path = ../assets/fonts/Nunito.ttf; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-NewsBlog.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsBlog.debug.xcconfig"; path = "Target Support Files/Pods-NewsBlog/Pods-NewsBlog.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-NewsBlog.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsBlog.release.xcconfig"; path = "Target Support Files/Pods-NewsBlog/Pods-NewsBlog.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-NewsBlog-NewsBlogTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsBlog-NewsBlogTests.debug.xcconfig"; path = "Target Support Files/Pods-NewsBlog-NewsBlogTests/Pods-NewsBlog-NewsBlogTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-NewsBlog.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NewsBlog.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NewsBlog/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-NewsBlog-NewsBlogTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewsBlog-NewsBlogTests.release.xcconfig"; path = "Target Support Files/Pods-NewsBlog-NewsBlogTests/Pods-NewsBlog-NewsBlogTests.release.xcconfig"; sourceTree = "<group>"; };
+		DFC5E66CDEB64466826ADD86 /* NewYork.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = NewYork.ttf; path = ../assets/fonts/NewYork.ttf; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		26480D5C3D0642AB94A1C17F /* Nunito.ttf */ = {isa = PBXFileReference; name = "Nunito.ttf"; path = "../assets/fonts/Nunito.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		DFC5E66CDEB64466826ADD86 /* NewYork.ttf */ = {isa = PBXFileReference; name = "NewYork.ttf"; path = "../assets/fonts/NewYork.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +85,16 @@
 				00E356F11AD99517003FC87E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		104D06AA045D4287A2A4D275 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				26480D5C3D0642AB94A1C17F /* Nunito.ttf */,
+				DFC5E66CDEB64466826ADD86 /* NewYork.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		13B07FAE1A68108700A75B9A /* NewsBlog */ = {
@@ -152,16 +162,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		104D06AA045D4287A2A4D275 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				26480D5C3D0642AB94A1C17F /* Nunito.ttf */,
-				DFC5E66CDEB64466826ADD86 /* NewYork.ttf */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
