@@ -25,7 +25,6 @@ const FilteredNewsCard = () => {
 const styles = StyleSheet.create({
     container:{
        height:128,
-       backgroundColor:'red',
        borderRadius:8,
        marginBottom:15
     },

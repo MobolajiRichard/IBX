@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView} from 'react-native';
+import {Button, SafeAreaView, Pressable} from 'react-native';
 import {Screens} from './src';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -19,11 +19,18 @@ function App(): JSX.Element {
           <Stack.Screen
             name="feed"
             component={Screens.NewsFeeds}
-            options={{
+            options={({navigation}) => ({
               headerShown: true,
-              headerLeft: () => <ICONS.Back />,
-              headerRight: () => <ICONS.Delete />,
-            }}
+              headerBackTitleVisible: false,
+              headerTitle: 'Hot Updates',
+              headerTitleStyle: {fontSize: 17, color: COLORS.primary},
+              headerShadowVisible:false,
+              headerLeft: () => (
+                <Pressable onPress={() => navigation.goBack()}>
+                  <ICONS.Back />
+                </Pressable>
+              ),
+            })}
           />
           <Stack.Screen
             name="news"
