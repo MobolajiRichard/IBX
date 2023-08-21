@@ -40,6 +40,7 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
         <View style={styles.favorite}>
           <ICONS.FAB />
         </View>
+        <View style={{marginTop:'20%'}}></View>
         <ScrollView style={styles.newsContainer}>
           <Text style={styles.news}>
             LONDON — Cryptocurrencies “have no intrinsic value” and people who
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     marginTop: -40,
   },
   details: {
-    height: 141,
+    height: '35%',
     width: '83%',
     backgroundColor: 'rgba(245, 245, 245, 0.8)',
     borderRadius: 16,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     position: 'absolute',
     left: '8.5%',
-    top: '-15%',
+    top: '-18%',
   },
   publisher: {
     fontFamily: 'Nunito',
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
     lineHeight: 17.2,
-    width: '80%',
+    width: '90%',
   },
   date: {
     fontFamily: 'Nunito',

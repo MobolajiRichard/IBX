@@ -20,7 +20,6 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
 }) => {
   const [filter, setFilter] = useState('Healthy');
   const [tab, setTab] = useState('home');
-  const [openSearchModal, setOpenSearchModal] = useState(false);
   const filters = [
     'Healthy',
     'Technology',
@@ -34,9 +33,9 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
     <SafeAreaView style={styles.container}>
         <View style={styles.container}>
         <View style={styles.searchContainer}>
-        <View style={styles.searchBox}>
+        <Pressable onPress={() => navigation.navigate('search')} style={styles.searchBox}>
           <TextInput placeholder="Dogecoin to the moon.." />
-        </View>
+        </Pressable>
         <View style={styles.notification}>
           <ICONS.Notification />
         </View>
@@ -45,8 +44,8 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
       <View style={styles.latest}>
         <Text style={styles.latestNews}>Latest News</Text>
         <Pressable
-            onPress={() => navigation.navigate('news', {newsId:'4'})}
-        //   onPress={() => setOpenSearchModal(true)}
+            onPress={() => navigation.navigate('search')}
+          // onPress={() => setOpenSearchModal(true)}
           style={styles.seeAllContainer}>
           <Text style={styles.seeAll}>See All</Text>
           <ICONS.ForwardArrow />
@@ -135,20 +134,6 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
           </Text>
         </Pressable>
       </View>
-      
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={openSearchModal}
-        
-        onRequestClose={() => setOpenSearchModal(false)}>
-            <View style={{flex:0.5, backgroundColor:'red', padding:60, marginTop:'auto'}}>
-            <Text>ji</Text>
-            <Pressable onPress={() =>setOpenSearchModal(false)}>
-                <Text>insshsl</Text>
-            </Pressable>
-            </View>
-      </Modal>
         </View>
     </SafeAreaView>
   );
@@ -243,6 +228,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito',
     fontWeight: '400',
   },
+  modalContainer:{
+    backgroundColor:'red', padding:60, marginTop:'auto', height:'38.8%',
+    borderTopRightRadius:8,
+    borderTopLeftRadius:8
+  }
 });
 
 export default HomeScreen;

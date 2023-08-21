@@ -5,11 +5,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './src/types';
 import {COLORS, ICONS} from './src/constant';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Home"
@@ -36,8 +39,14 @@ function App(): JSX.Element {
             component={Screens.News}
             options={{headerShown:false}}
           />
+          <Stack.Screen
+            name="search"
+            component={Screens.Search}
+            options={{headerShown:false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -1,6 +1,6 @@
 import HomeScreen from "./HomeScreen";
 import NewsFeeds from "./NewsFeed";
 import News from "./News";
-import SearchModal from "./SearchModal";
+import Search from "./Search";
 
-export default {HomeScreen, NewsFeeds, News, SearchModal}
+export default {HomeScreen, NewsFeeds, News, Search}
