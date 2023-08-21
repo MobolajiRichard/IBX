@@ -9,16 +9,22 @@ import {
   Dimensions,
   Pressable,
   ScrollView,
+  Alert,
 } from 'react-native';
 import {RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {FC} from 'react';
 import {ICONS} from '../constant';
+import { useAppSelector } from '../../hooks/reduxHook';
 const hero = require('../../assets/images/hero.png');
 
 const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
-  navigation,
+  navigation, route
 }) => {
+ const latestNews = useAppSelector(state => state.news.latestNews)
+ const {newsId} = route.params
+ const article = latestNews?.find((news) => news.title === newsId)
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle={'light-content'} />
@@ -26,43 +32,23 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
         <ICONS.Back />
       </Pressable>
       <View style={styles.imageContainer}>
-        <Image source={hero} style={styles.image} resizeMode="cover" />
+        <Image source={{uri: article?.urlToImage}} style={styles.image} resizeMode="cover" />
       </View>
       <View style={styles.content}>
         <View style={styles.details}>
-          <Text style={styles.date}>Sunday, 9 May 2021 </Text>
+          <Text style={styles.date}>{article?.publishedAt.split('T')[0]}</Text>
           <Text style={styles.title}>
-            Crypto investors should be prepared to lose all their money, BOE
-            governor says
+            {article?.title}
           </Text>
-          <Text style={styles.publisher}>Published by Ryan Browne</Text>
+          <Text style={styles.publisher}>Published by {article?.author}</Text>
         </View>
-        <View style={styles.favorite}>
+        <Pressable onPress={() => Alert.alert('Added to Favorites')} style={styles.favorite}>
           <ICONS.FAB />
-        </View>
+        </Pressable >
         <View style={{marginTop:'20%'}}></View>
         <ScrollView style={styles.newsContainer}>
           <Text style={styles.news}>
-            LONDON — Cryptocurrencies “have no intrinsic value” and people who
-            invest in them should be prepared to lose all their money, Bank of
-            England Governor Andrew Bailey said. Digital currencies like
-            bitcoin, ether and even dogecoin have been on a tear this year,
-            reminding some investors of the 2017 crypto bubble in which bitcoin
-            blasted toward $20,000, only to sink as low as $3,122 a year later.
-            Asked at a press conference Thursday about the rising value of
-            cryptocurrencies, Bailey said: “They have no intrinsic value. That
-            doesn’t mean to say people don’t put value on them, because they can
-            have extrinsic value. But they have no intrinsic value.” “I’m going
-            to say this very bluntly again,” he added. “Buy them only if you’re
-            prepared to lose all your money.” Bailey’s comments echoed a similar
-            warning from the U.K.’s Financial Conduct Authority. “Investing in
-            cryptoassets, or investments and lending linked to them, generally
-            involves taking very high risks with investors’ money,” the
-            financial services watchdog said in January. “If consumers invest in
-            these types of product, they should be prepared to lose all their
-            money.” Bailey, who was formerly the chief executive of the FCA, has
-            long been a skeptic of crypto. In 2017, he warned: “If you want to
-            invest in bitcoin, be prepared to lose all your money.”
+            {article?.content}
           </Text>
         </ScrollView>
       </View>

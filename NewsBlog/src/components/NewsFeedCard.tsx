@@ -7,27 +7,28 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../constant';
+import { useAppSelector } from '../../hooks/reduxHook';
+import { useNavigation } from '@react-navigation/native';
 const hero = require('../../assets/images/hero.png');
 
-const NewsFeedcard = () => {
-  const text = `A World Health Organization official said Monday it is reclassifying the highly contagious triple-mutant Covid variant spreading in India as a “variant of concern,” indicating that it’s become aA World Health Organization official said Monday it is reclassifying the highl contagious triple-mutant Covid variant spreading in India as a “variant of concern,” indicating that it’s become a...Read MorevvvA World Healt Organization official said Monday it is reclassifying the highly contagious triple-mutant Covid variant spreading in India as a “variant of concern,” indicating that it’s become a...Read MoreA World Health  Organization official said Monday it is reclassifying the highly contagious triple-mutant Covid variant spreading in India as a “variant of concern,” indicating that it’s become a...Read MorevvA World Health  Organization official said Monday it is reclassifying the highly contagious triple-mutant Covid variant spreading in India as a “variant of concern,” indicating that it’s become a...Read More`;
+const NewsFeedcard = ({data}) => {
+  const navigation = useNavigation()
   return (
     <View style={styles.container}>
-      <Image source={hero} style={styles.image} resizeMode="cover" />
-      <Text style={styles.date}>Monday, 10 May 2021</Text>
+      <Image source={{uri: data?.urlToImage}} style={styles.image} resizeMode="cover" />
+      <Text style={styles.date}>{data?.publishedAt?.split('T')[0]}</Text>
       <Text style={styles.title}>
-        WHO classifies triple-mutant Covid variant from India as global health
-        risk
+        {data?.title}
       </Text>
       <Text style={styles.description}>
-        {text.substring(0, 400) + '...'}
-        <Pressable>
+        {data?.content?.substring(0, 400) + '...'}
+        <Pressable onPress={() => navigation.navigate('news', {newsId: data?.title})}>
           <Text style={[styles.description, {color: COLORS.secondary}]}>
             Read More
           </Text>
         </Pressable>
       </Text>
-      <Text style={styles.publisher}>Published by Jamal Junior</Text>
+      <Text style={styles.publisher}>Published by {data?.author}</Text>
     </View>
   );
 };

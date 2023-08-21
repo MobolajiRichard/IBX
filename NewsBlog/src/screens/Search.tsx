@@ -119,6 +119,8 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
               )}
               horizontal
               showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item}
+
             />
           </View>
           {/* Search Results */}
@@ -130,6 +132,8 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
         renderItem={({item}) => <FilteredNewsCard />}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{marginTop:10, paddingBottom:30}}
+        keyExtractor={(item) => item.title}
+
       />
             </View>             
           

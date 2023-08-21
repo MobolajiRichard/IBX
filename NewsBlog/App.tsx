@@ -32,6 +32,7 @@ function App(): JSX.Element {
                   <ICONS.Back />
                 </Pressable>
               ),
+              headerTitleAlign:'center'
             })}
           />
           <Stack.Screen
