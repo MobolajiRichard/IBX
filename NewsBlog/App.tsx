@@ -10,7 +10,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App(): JSX.Element {
   return (
-    <SafeAreaView style={{flex: 1, height: 100}}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Home"
@@ -35,11 +34,10 @@ function App(): JSX.Element {
           <Stack.Screen
             name="news"
             component={Screens.News}
-            options={{headerShown: true, headerTitle: 'Hot Updates'}}
+            options={{headerShown:false}}
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
   );
 }
 

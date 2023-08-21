@@ -11,5 +11,5 @@ const xml = `<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="
 </defs>
 </svg>`
 
-export default () => <SvgXml xml={xml} width="100%" height="100%"/>
+export default () => <SvgXml xml={xml}/>
 

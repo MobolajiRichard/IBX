@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
+  Modal,
 } from 'react-native';
 import {RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -19,6 +20,7 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
 }) => {
   const [filter, setFilter] = useState('Healthy');
   const [tab, setTab] = useState('home');
+  const [openSearchModal, setOpenSearchModal] = useState(false);
   const filters = [
     'Healthy',
     'Technology',
@@ -29,8 +31,9 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
   ];
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
+    <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
+        <View style={styles.searchContainer}>
         <View style={styles.searchBox}>
           <TextInput placeholder="Dogecoin to the moon.." />
         </View>
@@ -42,7 +45,8 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
       <View style={styles.latest}>
         <Text style={styles.latestNews}>Latest News</Text>
         <Pressable
-          onPress={() => navigation.navigate('feed')}
+            onPress={() => navigation.navigate('news', {newsId:'4'})}
+        //   onPress={() => setOpenSearchModal(true)}
           style={styles.seeAllContainer}>
           <Text style={styles.seeAll}>See All</Text>
           <ICONS.ForwardArrow />
@@ -131,7 +135,22 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
           </Text>
         </Pressable>
       </View>
-    </View>
+      
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={openSearchModal}
+        
+        onRequestClose={() => setOpenSearchModal(false)}>
+            <View style={{flex:0.5, backgroundColor:'red', padding:60, marginTop:'auto'}}>
+            <Text>ji</Text>
+            <Pressable onPress={() =>setOpenSearchModal(false)}>
+                <Text>insshsl</Text>
+            </Pressable>
+            </View>
+      </Modal>
+        </View>
+    </SafeAreaView>
   );
 };
 
