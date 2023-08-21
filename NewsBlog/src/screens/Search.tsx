@@ -11,15 +11,19 @@ import {
   TouchableWithoutFeedback,
   TouchableNativeFeedback,
   Keyboard,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
-import {RootStackParamList} from '../types';
+import {NewsArticles, RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {FilteredNewsCard, NewsFeedcard} from '../components';
 import {COLORS, ICONS} from '../constant';
 const hero = require('../../assets/images/hero.png');
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
+import {storeSearchResultNews} from '../../redux/NewsSlice';
+import {useAppDispatch} from '../../hooks/reduxHook';
 
 const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
   navigation,
@@ -28,6 +32,10 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
   const [filterOptions, setFilterOptons] = useState('');
   const [filterActive, setFilterActive] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const [searchResults, setSearchResults] = useState<NewsArticles[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const dispatch = useAppDispatch();
   const filters = [
     'Healthy',
     'Technology',
@@ -55,11 +63,32 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
     setFilterActive(false);
   };
 
-  const onSubmit = () => {};
+  const fetchSearchedNews = async () => {
+    setIsSearching(true);
+    try {
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=${searchText}&apiKey=23b71f7eadcc410f839e666ab8eac26f`,
+      );
+      const data = await response.json();
+      setSearchResults(data.articles);
+      dispatch(storeSearchResultNews(data.articles));
+    } catch (error) {
+      Alert.alert('Sorry.. An error occured');
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
-  console.log(searchText);
+  // useEffect(() => {
+  //   fetchSearchedNews();
+  // }, []);
+  const onSubmit = () => {
+    fetchSearchedNews();
+  };
+
+  console.log({searchResults}, 'search');
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.searchContainer}>
@@ -69,6 +98,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
                 style={{flex: 1}}
                 onChangeText={setSearchText}
                 placeholderTextColor={'#818181'}
+                onSubmitEditing={onSubmit}
                 placeholder="Dogecoin to the moon.."
               />
 
@@ -135,35 +165,56 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
             />
           </View>
           {/* Search Results */}
-        {  false && <><Text style={styles.resultText}>
-            About 11,130,000 results for{' '}
-            <Text
-              style={{
-                fontWeight: '700',
-                fontFamily: 'Nunito-BoldItalic',
-                fontStyle: 'italic',
-              }}>
-              COVID New Variant
-            </Text>
-          </Text>
+          {searchResults?.length > 0 && (
+            <>
+              <Text style={styles.resultText}>
+                About {searchResults.length} results for{' '}
+                <Text
+                  style={{
+                    fontWeight: '700',
+                    fontFamily: 'Nunito-BoldItalic',
+                    fontStyle: 'italic',
+                  }}>
+                  {searchText}
+                </Text>
+              </Text>
 
-          <View style={{flex: 1}}>
-            <FlatList
-              data={filters}
-              renderItem={({item}) => <FilteredNewsCard />}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={{marginTop: 10, paddingBottom: 30}}
-              keyExtractor={item => item.title}
-            />
-          </View></>}
+              <View style={{flex: 1}}>
+                <FlatList
+                  data={searchResults}
+                  renderItem={({item}) => (
+                    <FilteredNewsCard screen="search" data={item} />
+                  )}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={{marginTop: 10, paddingBottom: 30}}
+                  keyExtractor={item => item.title}
+                />
+              </View>
+            </>
+          )}
+
+          {isSearching && (
+            <View
+              style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+              <ActivityIndicator />
+              <Text>Searching.... Please Wait</Text>
+            </View>
+          )}
 
           {/* Modal */}
           <Modal
             isVisible={showFilterModal}
-            style={{margin:0}}
+            style={{margin: 0}}
             backdropOpacity={0.2}
             onBackdropPress={onSave}>
             <View style={styles.modalContainer}>
+              <View
+                style={{
+                  height: 5,
+                  width: 72,
+                  backgroundColor: '#c5c5c5',
+                  borderRadius: 8,
+                }}></View>
               <View style={styles.modalHeader}>
                 <Text style={styles.filterText}>Filter</Text>
                 <View style={styles.reset}>
@@ -303,14 +354,16 @@ const styles = StyleSheet.create({
     height: '38.8%',
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
-    paddingVertical: '5%',
-    justifyContent: 'space-evenly',
-    // width:Dimensions.get('window').width
+    paddingTop:6,
+    paddingBottom: '10%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    width: '100%',
   },
   filterText: {
     fontFamily: 'Nunito-Bold',
@@ -347,6 +400,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
   saveButtonText: {
     fontSize: 16,

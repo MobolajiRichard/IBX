@@ -1,14 +1,17 @@
-import {Text, View, StyleSheet, ImageBackground, Pressable} from 'react-native';
+import {Text, View, StyleSheet, ImageBackground, Pressable, Animated} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../constant';
 import {useNavigation} from '@react-navigation/native';
+import { NewsArticles, RootStackParamList } from '../types';
 const hero = require('../../assets/images/hero.png');
+import { StackNavigationProp } from '@react-navigation/stack';
 
-const HeroCard = ({data}) => {
-  const navigation = useNavigation();
+const HeroCard = ({data}:{data:NewsArticles}) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   return (
     <Pressable
-      onPress={() => navigation.navigate('news', {newsId: data?.title})}>
+      onPress={() => navigation.navigate('news', {newsId: data?.title, screen:'latest'})}>
       <ImageBackground
         source={{uri: data?.urlToImage}}
         imageStyle={{borderRadius: 8}}

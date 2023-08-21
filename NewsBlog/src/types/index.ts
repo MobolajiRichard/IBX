@@ -1,7 +1,7 @@
 export type RootStackParamList = {
     Home: undefined;
     feed:undefined;
-    news:{newsId: string};
+    news:{newsId: string; screen:string};
     search:undefined
 }
 

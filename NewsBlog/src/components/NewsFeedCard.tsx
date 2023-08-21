@@ -3,10 +3,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../constant';
 import {useAppSelector} from '../../hooks/reduxHook';
 import {useNavigation} from '@react-navigation/native';
+import { NewsArticles, RootStackParamList } from '../types';
+import { StackNavigationProp } from '@react-navigation/stack';
 const hero = require('../../assets/images/hero.png');
 
-const NewsFeedcard = ({data}) => {
-  const navigation = useNavigation();
+const NewsFeedcard = ({data}:{data:NewsArticles}) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <View style={styles.container}>
       <Image
@@ -19,7 +21,7 @@ const NewsFeedcard = ({data}) => {
       <Text style={styles.description}>
         {data?.content?.substring(0, 400) + '...'}
         <Pressable
-          onPress={() => navigation.navigate('news', {newsId: data?.title})}>
+          onPress={() => navigation.navigate('news', {newsId: data?.title, screen:'latest'})}>
           <Text style={[styles.description, {color: COLORS.secondary}]}>
             Read More
           </Text>

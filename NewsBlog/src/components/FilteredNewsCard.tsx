@@ -1,17 +1,17 @@
 import { Text, View, StyleSheet, ImageBackground, Pressable } from "react-native"
 import LinearGradient from "react-native-linear-gradient"
-import { NewsArticles } from "../types"
+import { NewsArticles, RootStackParamList } from "../types"
 import { FC, useState } from "react"
 import { useNavigation } from "@react-navigation/native"
 import { COLORS } from "../constant"
+import { StackNavigationProp } from "@react-navigation/stack"
 const hero = require('../../assets/images/hero.png')
 
-const FilteredNewsCard:FC<NewsArticles> = ({data}) => {
-    const [imageSource, setImageSource] = useState({uri: data?.urlToImage})
-    const navigation = useNavigation()
+const FilteredNewsCard = ({data, screen}:{data:NewsArticles, screen:string}) => {
+    const navigation = useNavigation<StackNavigationProp<RootStackParamList>>()
     return (
-        <Pressable onPress = {() => navigation.navigate('news', {newsId:data?.title})}>
-            <ImageBackground source={{uri: data?.urlToImage}} onError={() => setImageSource(hero)} imageStyle={{borderRadius:8}} resizeMode="cover" style={styles.container}>
+        <Pressable onPress = {() => navigation.navigate('news', {newsId: data?.title, screen })}>
+            <ImageBackground source={{uri: data?.urlToImage}} imageStyle={{borderRadius:8}} resizeMode="cover" style={styles.container}>
             <LinearGradient colors={['rgba(98, 98, 98, 0)', 'rgba(0, 0, 0, 0.8)']} style={styles.wrapper}>
                 <View>
                     <Text style={styles.title}>{data?.title?.length > 70 ? data?.title?.substring(0, 70) + '...' : data?.title}</Text>

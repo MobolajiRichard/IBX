@@ -19,14 +19,20 @@ import {useAppSelector} from '../../hooks/reduxHook';
 const hero = require('../../assets/images/hero.png');
 import LinearGradient from 'react-native-linear-gradient';
 
-
 const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
   navigation,
   route,
 }) => {
-  const latestNews = useAppSelector(state => state.news.latestNews);
-  const {newsId} = route.params;
-  const article = latestNews?.find(news => news.title === newsId);
+  let news;
+  const {newsId, screen} = route.params;
+  if (screen === 'latest') {
+    news = useAppSelector(state => state.news.latestNews);
+  } else if (screen === 'category') {
+    news = useAppSelector(state => state.news.categoryNews);
+  } else {
+    news = useAppSelector(state => state.news.searchResultNews);
+  }
+  const article = news?.find(news => news.title === newsId);
 
   return (
     <View style={styles.container}>
@@ -42,12 +48,14 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
         />
       </View>
       <View style={styles.content}>
-        <LinearGradient colors={['rgba(192, 192, 192, 0.92)', 'rgba(245, 245, 245, 1)']} style={styles.details}>
+        <LinearGradient
+          colors={['rgba(192, 192, 192, 0.92)', 'rgba(245, 245, 245, 1)']}
+          style={styles.details}>
           <Text style={styles.date}>{article?.publishedAt.split('T')[0]}</Text>
           <Text style={styles.title}>{article?.title}</Text>
           <Text style={styles.publisher}>Published by {article?.author}</Text>
         </LinearGradient>
-       
+
         <Pressable
           onPress={() => Alert.alert('Added to Favorites')}
           style={styles.favorite}>
@@ -119,13 +127,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 17.2,
     width: '90%',
-    color:COLORS.textBlack
+    color: COLORS.textBlack,
   },
   date: {
     fontFamily: 'Nunito-Semibold',
     fontWeight: '600',
     fontSize: 12,
-    color:COLORS.textBlack
+    color: COLORS.textBlack,
   },
   favorite: {
     position: 'absolute',
@@ -139,10 +147,10 @@ const styles = StyleSheet.create({
   },
   news: {
     textAlign: 'justify',
-    fontFamily:'Nunito-Semibold',
-    fontSize:14,
-    color:COLORS.textBlack
-    },
+    fontFamily: 'Nunito-Semibold',
+    fontSize: 14,
+    color: COLORS.textBlack,
+  },
 });
 
 export default NewsFeeds;
