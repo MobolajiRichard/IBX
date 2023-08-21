@@ -55,6 +55,17 @@
 	<array>
 		<string>Nunito.ttf</string>
 		<string>NewYork.ttf</string>
+		<string>NewYorkMedium-Bold.ttf</string>
+		<string>NewYorkMedium-Semibold.ttf</string>
+		<string>Nunito-Black.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-BoldItalic.ttf</string>
+		<string>Nunito-ExtraBold.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>Nunito-Regular.ttf</string>
+		<string>Nunito-SemiBold.ttf</string>
+		<string>SF-Pro.otf</string>
+		<string>SF-Pro-Text-Bold.otf</string>
 	</array>
 </dict>
 </plist>

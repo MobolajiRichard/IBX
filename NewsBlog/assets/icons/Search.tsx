@@ -1,7 +1,7 @@
 import { SvgXml } from "react-native-svg"
 
-const xml = `<svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M11.4738 10.5206C12.5899 9.42063 13.2183 7.9272 13.2183 6.36842C13.2183 4.80964 12.5899 3.31621 11.4738 2.21625C10.3579 1.11653 8.84592 0.5 7.27092 0.5C5.69591 0.5 4.18397 1.11653 3.06808 2.21625C1.95194 3.31621 1.32355 4.80964 1.32355 6.36842C1.32355 7.9272 1.95194 9.42063 3.06808 10.5206C4.18397 11.6203 5.69591 12.2368 7.27092 12.2368C8.84592 12.2368 10.3579 11.6203 11.4738 10.5206Z" stroke="#818181" stroke-opacity="0.8"/>
+const xml = `<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M16.6725 16.6412L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#818181" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`
 
-export default () => <SvgXml xml={xml} />
+export default () => <SvgXml xml={xml} height={20} width={52}/>

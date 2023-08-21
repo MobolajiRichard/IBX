@@ -6,11 +6,11 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
-  Modal,
   Pressable,
   Touchable,
   TouchableWithoutFeedback,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Keyboard,
 } from 'react-native';
 import {RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -18,6 +18,8 @@ import {FC, useState} from 'react';
 import {FilteredNewsCard, NewsFeedcard} from '../components';
 import {COLORS, ICONS} from '../constant';
 const hero = require('../../assets/images/hero.png');
+import Modal from 'react-native-modal';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
   navigation,
@@ -33,7 +35,6 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
     'Arts',
     'Sports',
     'Politics',
-    
   ];
 
   const sortOptions = [
@@ -50,21 +51,27 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
   };
 
   const onSave = () => {
-    setShowFilterModal(false)
-    setFilterActive(false)
-  }
+    setShowFilterModal(false);
+    setFilterActive(false);
+  };
 
-  const onSubmit = () => {
+  const onSubmit = () => {};
 
-  }
-
-  console.log(searchText)
+  console.log(searchText);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor:'white'}}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.searchContainer}>
             <View style={styles.searchBox}>
-              <TextInput onChangeText={setSearchText} placeholder="Dogecoin to the moon.." />
+              <TextInput
+                autoFocus={true}
+                style={{flex: 1}}
+                onChangeText={setSearchText}
+                placeholderTextColor={'#818181'}
+                placeholder="Dogecoin to the moon.."
+              />
+
               <Pressable
                 onPress={() => navigation.navigate('Home')}
                 style={styles.close}>
@@ -74,7 +81,12 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
           </View>
           {/* filtered news card */}
           {/* filter buttons */}
-          <View style={{flexDirection: 'row', alignItems: 'center', marginBottom:30}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 30,
+            }}>
             <Pressable
               onPress={onFilterSelect}
               style={[
@@ -119,30 +131,38 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
               )}
               horizontal
               showsHorizontalScrollIndicator={false}
-              keyExtractor={(item) => item}
-
+              keyExtractor={item => item}
             />
           </View>
           {/* Search Results */}
-          <Text style={styles.resultText}>About 11,130,000 results for <Text style={{fontWeight:'700'}}>COVID New Variant</Text></Text>
-          
-           <View style={{flex:1}}>
-           <FlatList
-        data={filters}
-        renderItem={({item}) => <FilteredNewsCard />}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{marginTop:10, paddingBottom:30}}
-        keyExtractor={(item) => item.title}
+        {  false && <><Text style={styles.resultText}>
+            About 11,130,000 results for{' '}
+            <Text
+              style={{
+                fontWeight: '700',
+                fontFamily: 'Nunito-BoldItalic',
+                fontStyle: 'italic',
+              }}>
+              COVID New Variant
+            </Text>
+          </Text>
 
-      />
-            </View>             
-          
+          <View style={{flex: 1}}>
+            <FlatList
+              data={filters}
+              renderItem={({item}) => <FilteredNewsCard />}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{marginTop: 10, paddingBottom: 30}}
+              keyExtractor={item => item.title}
+            />
+          </View></>}
+
           {/* Modal */}
           <Modal
-            animationType="slide"
-            transparent={true}
-            visible={showFilterModal}
-            onRequestClose={() => setShowFilterModal(false)}>
+            isVisible={showFilterModal}
+            style={{margin:0}}
+            backdropOpacity={0.2}
+            onBackdropPress={onSave}>
             <View style={styles.modalContainer}>
               <View style={styles.modalHeader}>
                 <Text style={styles.filterText}>Filter</Text>
@@ -154,17 +174,17 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
                 </View>
               </View>
               <View>
-              <Text style={styles.sortBy}>Sort By</Text>
-              <View style={styles.sortOptions}>
-                {sortOptions.map((s, i) => (
-                  <Pressable
-                    style={[styles.filterButtons, {marginTop:10}]}
-                    key={i}
-                    onPress={() => setShowFilterModal(false)}>
-                    <Text style={styles.filterButtonTexts}>{s}</Text>
-                  </Pressable>
-                ))}
-              </View>
+                <Text style={styles.sortBy}>Sort By</Text>
+                <View style={styles.sortOptions}>
+                  {sortOptions.map((s, i) => (
+                    <Pressable
+                      style={[styles.filterButtons, {marginTop: 10}]}
+                      key={i}
+                      onPress={() => setShowFilterModal(false)}>
+                      <Text style={styles.filterButtonTexts}>{s}</Text>
+                    </Pressable>
+                  ))}
+                </View>
               </View>
               <Pressable onPress={onSave} style={styles.saveButton}>
                 <Text style={styles.saveButtonText}>SAVE</Text>
@@ -172,6 +192,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
             </View>
           </Modal>
         </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
@@ -191,12 +212,13 @@ const styles = StyleSheet.create({
   searchBox: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: COLORS.grey,
-    paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 16,
+    borderRadius: 20,
+    marginRight: 20,
+    height: 40,
   },
   close: {
     width: 15,
@@ -231,13 +253,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     borderColor: COLORS.grey,
-    height: 32,
+    height: 35,
     marginRight: 8,
   },
   filterButtonTexts: {
     fontSize: 12,
-    fontFamily: 'Nunito',
+    fontFamily: 'Nunito-SemiBold',
     fontWeight: '600',
+    color: '#041E2F',
   },
   buttonTab: {
     flexDirection: 'row',
@@ -264,33 +287,35 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Nunito',
     fontWeight: '400',
-  },
-  
-  resultText:{
-    fontFamily:'Nunito',
-    fontSize:14
+    color: '#041E2F',
   },
 
+  resultText: {
+    fontFamily: 'Nunito-SemiBold',
+    fontSize: 14,
+    color: '#041E2F',
+  },
 
   modalContainer: {
     backgroundColor: 'white',
     paddingHorizontal: '4%',
     marginTop: 'auto',
     height: '38.8%',
-    borderTopRightRadius: 8,
-    borderTopLeftRadius: 8,
-    paddingVertical:'5%',
-    justifyContent:'space-evenly'
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
+    paddingVertical: '5%',
+    justifyContent: 'space-evenly',
+    // width:Dimensions.get('window').width
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  filterText:{
-    fontFamily:'Nunito',
-    fontWeight:'700',
-    fontSize:22
+  filterText: {
+    fontFamily: 'Nunito-Bold',
+    fontSize: 22,
+    color: '#041E2F',
   },
   reset: {
     paddingVertical: 8,
@@ -305,30 +330,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  sortBy:{
-  fontFamily:'Nunito',
-  fontSize:14,
-  fontWeight:'600',
-  marginLeft:10
+  sortBy: {
+    fontFamily: 'Nunito-SemiBold',
+    fontSize: 14,
+    // fontWeight:'600',
+    marginLeft: 10,
+    color: '#041E2F',
   },
   sortOptions: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  saveButton:{
-    backgroundColor:COLORS.primary,
-    height:48,
-    borderRadius:24,
-    alignItems:'center',
-    justifyContent:'center',
-    
+  saveButton: {
+    backgroundColor: COLORS.primary,
+    height: 48,
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  saveButtonText:{
-    fontSize:16,
-    fontWeight:'800',
-    color:'white',
-    fontFamily:'Nunito'
-  }
+  saveButtonText: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: 'white',
+    fontFamily: 'Nunito-Bold',
+  },
 });
 
 export default Search;

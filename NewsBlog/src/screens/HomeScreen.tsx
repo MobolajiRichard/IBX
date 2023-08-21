@@ -348,12 +348,14 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
 
 
   return (
-      <View style={styles.container}>
+    <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
+ <View style={styles.container}>
         <View style={styles.searchContainer}>
           <Pressable
             onPress={() => navigation.navigate('search')}
             style={styles.searchBox}>
-            <TextInput placeholder="Dogecoin to the moon.."  onFocus={() => navigation.navigate('search')}/>
+            <Text style={{flex:1, color:'#818181'}}>Dogecoin to the moon...</Text>
+          <ICONS.Search/>
           </Pressable>
           <View style={styles.notification}>
             <ICONS.Notification />
@@ -458,6 +460,7 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({
           </Pressable>
         </View>
       </View>
+    </SafeAreaView>
   );
 };
 
@@ -475,13 +478,15 @@ const styles = StyleSheet.create({
   },
   searchBox: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    alignItems:'center',
     borderWidth: 1,
     borderColor: COLORS.grey,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 16,
+    // paddingVertical: 8,
+    paddingLeft: 16,
+    borderRadius: 20,
     marginRight: 20,
+    height:40
   },
   notification: {
     width: 30,
@@ -495,20 +500,19 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   latestNews: {
-    fontFamily: 'New York',
+    fontFamily: 'NewYorkMedium-Bold',
     fontSize: 18,
-    fontWeight: "700",
+    color:'black'
   },
   seeAllContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   seeAll: {
-    fontFamily: 'Nunito',
+    fontFamily: 'Nunito-SemiBold',
     fontSize: 12,
     color: COLORS.secondary,
     marginRight: 10,
-    fontWeight: '600',
   },
   filterButtons: {
     paddingVertical: 8,
@@ -521,8 +525,8 @@ const styles = StyleSheet.create({
   },
   filterButtonTexts: {
     fontSize: 12,
-    fontFamily: 'Nunito',
-    fontWeight: '600',
+    fontFamily: 'Nunito-SemiBold',
+    color:'black'
   },
   buttonTab: {
     flexDirection: 'row',
@@ -547,8 +551,8 @@ const styles = StyleSheet.create({
   },
   buttonTabIconText: {
     fontSize: 10,
-    fontFamily: 'Nunito',
-    fontWeight: '400',
+    fontFamily: 'Nunito-Regular',
+    color:'black'
   },
   modalContainer: {
     backgroundColor: 'red',

@@ -45,10 +45,9 @@ const styles = StyleSheet.create({
        justifyContent:'space-between'
         },
     title:{
-        fontFamily:'New York',
+        fontFamily:'NewYorkMedium-Semibold',
         color:'white',
         fontSize:14,
-        fontWeight:'600',
         lineHeight:20.6,
     },
     details:{
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
     info:{
         color:'white',
         fontSize:12,
-        fontFamily:'Nunito'
+        fontFamily:'Nunito-Semibold',
     }
 })
 
