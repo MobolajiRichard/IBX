@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
-  Alert,
   ActivityIndicator,
 } from 'react-native';
 import {RootStackParamList, NewsArticles} from '../types';
@@ -44,7 +43,6 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
     setIsLoading(true);
     setIsError(false)
     try {
-      console.log('runnning')
       const latestNews = await fetch(
         'https://newsapi.org/v2/top-headlines?country=us&apiKey=23b71f7eadcc410f839e666ab8eac26f',
       );
@@ -141,7 +139,7 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
             renderItem={({item}) => <HeroCard data={item} />}
             horizontal
             showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item.title}
+            keyExtractor={(item, index) => item.title + index}
           />
         </View>
 
@@ -172,7 +170,7 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
             <FilteredNewsCard screen="category" data={item} />
           )}
           showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.title}
+          keyExtractor={(item, index) => item.title + index}
         />
 
         {/* bottom tab */}

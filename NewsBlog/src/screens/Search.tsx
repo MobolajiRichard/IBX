@@ -177,7 +177,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({navig
                   )}
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={{marginTop: 10, paddingBottom: 30}}
-                  keyExtractor={item => item.title}
+                  keyExtractor={(item, index) => item.title + index}
                 />
               </View>
             </>

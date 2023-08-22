@@ -7,7 +7,7 @@ import {
   Dimensions,
   Pressable,
   ScrollView,
-  Alert,
+  Alert
 } from 'react-native';
 import {NewsArticles, RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -82,7 +82,7 @@ const News: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
 
         {/* favorite action button */}
         <Pressable
-          // onPress={() => Alert.alert('Added to Favorites')}
+          onPress={() => Alert.alert('Added to Favorites')}
           style={styles.favorite}>
           <ICONS.FAB />
         </Pressable>
@@ -92,7 +92,7 @@ const News: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
         <ScrollView style={styles.newsContainer}>
           {paragraphs?.map((p, i) =>
             i === 0 ? (
-              <Text style={styles.news}>
+              <Text key={i} style={styles.news}>
                 <Text style={styles.capitalize}>{p.split(' ')[0]} </Text>
                 {p.split(' ').slice(1).join(' ')}
               </Text>
