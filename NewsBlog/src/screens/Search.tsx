@@ -74,7 +74,6 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({navig
     fetchSearchedNews();
   };
 
-  console.log({searchResults}, 'search');
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
