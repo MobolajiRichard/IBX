@@ -40,5 +40,8 @@ To run app, after succcessfully cloning or downloading the source code on github
 - Some cards might not have an image background, this is due to the api returning some broken image links or some news have no cover images.
 
 # NB
-The api is limited by NewsApi.org and can only make 100 api calls in a day
+- The api is limited by NewsApi.org and can only make 100 api calls in a day.
+- Some cards might not have an image background, this is due to the api returning some broken image links or some news have no cover images.
+- Some news have no contents
+- Users may see words like '[+ 774 chars]' in the news feed this is because the api doesn't realease the full news for developers testing with the api.
     

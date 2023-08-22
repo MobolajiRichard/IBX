@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Dimensions,
   FlatList,
-  Modal,
   Alert,
   ActivityIndicator,
 } from 'react-native';
@@ -21,11 +20,11 @@ import {storeCategoryNews, storeLatestNews} from '../../redux/NewsSlice';
 const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({navigation}) => {
 
   //defining states for holding variables
-  const [category, setCategory] = useState('Health');
+  const [category, setCategory] = useState('health');
   const [tab, setTab] = useState('home');
   const [latestNews, setLatestNews] = useState<NewsArticles[]>([]);
   const [categoryArticles, setCategoryArticles] = useState<NewsArticles[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -43,9 +42,11 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
   // function to fetch the latest news
   const fetchLatestNews = async () => {
     setIsLoading(true);
+    setIsError(false)
     try {
+      console.log('runnning')
       const latestNews = await fetch(
-        'https://newsapi.org/v2/top-headlines?country=us&apiKey=df5965de7b3e4ec3a93468fd791777fd',
+        'https://newsapi.org/v2/top-headlines?country=us&apiKey=23b71f7eadcc410f839e666ab8eac26f',
       );
       const latestNewsData = await latestNews.json();
       setLatestNews(latestNewsData.articles);
@@ -53,23 +54,26 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
       dispatch(storeLatestNews(latestNewsData.articles));
     } catch (error) {
       setIsError(true);
-      Alert.alert('error');
+      console.log({error})
     } finally {
       setIsLoading(false);
+      setIsError(false)
     }
   };
 
-  // functionto fetch the news based on categories
+  // function to fetch the news based on categories
   const fetchCategoryNews = async () => {
     try {
       const categoryNews = await fetch(
-        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=df5965de7b3e4ec3a93468fd791777fd`,
+        `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=23b71f7eadcc410f839e666ab8eac26f`,
       );
       const categoryNewsData = await categoryNews.json();
       setCategoryArticles(categoryNewsData.articles);
       //onsuccess store the data received using redux
       dispatch(storeCategoryNews(categoryNewsData.articles));
-    } catch (error) {}
+    } catch (error) {
+      console.log({error})
+    }
   };
 
   //fetch latest news once on screen mount
@@ -112,7 +116,24 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
             <ICONS.ForwardArrow />
           </Pressable>
         </View>
+        {
+          isLoading && (
+            <View style={styles.isLoading}>
+              <ActivityIndicator/>
+              <Text>Loading...</Text>
+            </View>
 
+          )
+        }
+        {
+          isError && (
+            <View style={styles.isLoading}>
+              <Text style={{color:COLORS.primary}}>Error</Text>
+              <Text>An error occurred... Please try again</Text>
+            </View>
+
+          )
+        }
         {/* Latest News */}
         <View>
           <FlatList
@@ -123,6 +144,8 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
             keyExtractor={item => item.title}
           />
         </View>
+
+       
 
         {/* filter buttons */}
         <View>
@@ -146,7 +169,7 @@ const HomeScreen: FC<NativeStackScreenProps<RootStackParamList, 'Home'>> = ({nav
         <FlatList
           data={categoryArticles}
           renderItem={({item}) => (
-            <FilteredNewsCard screen="home" data={item} />
+            <FilteredNewsCard screen="category" data={item} />
           )}
           showsVerticalScrollIndicator={false}
           keyExtractor={item => item.title}
@@ -300,6 +323,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 10,
   },
+  isLoading:{
+      height: 240,
+      backgroundColor: COLORS.grey,
+      borderRadius: 8,
+      width: '100%',
+      marginRight: 10,
+      alignItems:'center',
+      justifyContent:'center'
+
+  }
 });
 
 export default HomeScreen;

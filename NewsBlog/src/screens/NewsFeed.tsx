@@ -6,7 +6,6 @@ import {NewsFeedcard} from '../components';
 import { useAppSelector } from '../../hooks/reduxHook';
 
 const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'feed'>> = () => {
-
 // retrieve the latest news stored in redux
  const latestNews = useAppSelector(state => state.news.latestNews)
 
@@ -17,6 +16,7 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'feed'>> = () => 
         data={latestNews}
         renderItem={({item}) => <NewsFeedcard data={item}/>}
         showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item.title}
       />
     </View>
   );

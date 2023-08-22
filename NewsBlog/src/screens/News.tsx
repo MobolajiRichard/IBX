@@ -11,14 +11,18 @@ import {
 } from 'react-native';
 import {NewsArticles, RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {COLORS, ICONS} from '../constant';
 import {useAppSelector} from '../../hooks/reduxHook';
 import LinearGradient from 'react-native-linear-gradient';
+import {useCallback} from 'react';
 
-const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({navigation,route}) => {
+const News: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
+  navigation,
+  route,
+}) => {
   //state to hold the news to view
-  const [news, setNews] = useState<NewsArticles[] | null>([])
+  const [article, setArticle] = useState<NewsArticles | null>();
 
   //retrieving the params passed to the routes
   //newsId - To identify the news selected
@@ -27,16 +31,25 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({navi
 
   //retrieving the right data from redux based on the screen it was selected from
   //and storing it in state
-  if (screen === 'latest') {
-    setNews(useAppSelector(state => state.news.latestNews))
-  } else if (screen === 'category') {
-    setNews(useAppSelector(state => state.news.categoryNews))
-  } else {
-    setNews(useAppSelector(state => state.news.searchResultNews))
-  }
+  const getDataType = () => {
+    if (screen === 'search') {
+      return 'searchResultNews';
+    } else if (screen === 'category') {
+      return 'categoryNews';
+    } else {
+      return 'latestNews';
+    }
+  };
+  const articles = useAppSelector(state => state.news[getDataType()]);
 
-  //Finding the particular news gotten from the store based on the newsId
-  const article = news?.find(news => news.title === newsId);
+  useEffect(() => {
+    //Finding the particular news gotten from the store based on the newsId
+    let article = articles?.find(news => news.title === newsId);
+    setArticle(article);
+  }, []);
+
+  //get paragraphs
+  const paragraphs = article?.content?.split('\n');
 
   return (
     <View style={styles.container}>
@@ -57,9 +70,8 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({navi
         />
       </View>
 
-
       <View style={styles.content}>
-         {/* news details box */}
+        {/* news details box */}
         <LinearGradient
           colors={['rgba(192, 192, 192, 0.92)', 'rgba(245, 245, 245, 1)']}
           style={styles.details}>
@@ -68,9 +80,9 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({navi
           <Text style={styles.publisher}>Published by {article?.author}</Text>
         </LinearGradient>
 
-       {/* favorite action button */}
+        {/* favorite action button */}
         <Pressable
-          onPress={() => Alert.alert('Added to Favorites')}
+          // onPress={() => Alert.alert('Added to Favorites')}
           style={styles.favorite}>
           <ICONS.FAB />
         </Pressable>
@@ -78,7 +90,21 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({navi
 
         {/* news content */}
         <ScrollView style={styles.newsContainer}>
-          <Text style={styles.news}>{article?.content}</Text>
+          {paragraphs?.map((p, i) =>
+            i === 0 ? (
+              <Text style={styles.news}>
+                <Text style={styles.capitalize}>{p.split(' ')[0]} </Text>
+                {p.split(' ').slice(1).join(' ')}
+              </Text>
+            ) : (
+              <Text key={i} style={styles.news}>
+                {p}
+              </Text>
+            ),
+          )}
+          {!paragraphs && (
+            <Text style={[styles.news, {textAlign: 'center'}]}>No Content</Text>
+          )}
         </ScrollView>
       </View>
     </View>
@@ -164,7 +190,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Semibold',
     fontSize: 14,
     color: COLORS.textBlack,
+    marginBottom: 20,
+  },
+  capitalize: {
+    fontFamily: 'Nunito-ExtraBold',
+    fontSize: 14,
+    color: '#2e0505',
+    textTransform: 'capitalize',
   },
 });
 
-export default NewsFeeds;
+export default News;
