@@ -1,13 +1,12 @@
 import {Text, View, StyleSheet, Image, Pressable} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import {COLORS} from '../constant';
-import {useAppSelector} from '../../hooks/reduxHook';
 import {useNavigation} from '@react-navigation/native';
 import { NewsArticles, RootStackParamList } from '../types';
 import { StackNavigationProp } from '@react-navigation/stack';
-const hero = require('../../assets/images/hero.png');
 
+//card to display news in the hot update
 const NewsFeedcard = ({data}:{data:NewsArticles}) => {
+  //initializing the navigation function
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <View style={styles.container}>

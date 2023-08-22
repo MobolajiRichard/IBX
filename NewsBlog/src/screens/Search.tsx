@@ -7,27 +7,22 @@ import {
   Dimensions,
   FlatList,
   Pressable,
-  Touchable,
   TouchableWithoutFeedback,
-  TouchableNativeFeedback,
   Keyboard,
   ActivityIndicator,
   Alert,
 } from 'react-native';
 import {NewsArticles, RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FC, useEffect, useState} from 'react';
-import {FilteredNewsCard, NewsFeedcard} from '../components';
+import {FC,useState} from 'react';
+import {FilteredNewsCard} from '../components';
 import {COLORS, ICONS} from '../constant';
-const hero = require('../../assets/images/hero.png');
 import Modal from 'react-native-modal';
-import LinearGradient from 'react-native-linear-gradient';
 import {storeSearchResultNews} from '../../redux/NewsSlice';
 import {useAppDispatch} from '../../hooks/reduxHook';
 
-const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
-  navigation,
-}) => {
+const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({navigation}) => {
+  //definiing states
   const [searchText, setSearchText] = useState('');
   const [filterOptions, setFilterOptons] = useState('');
   const [filterActive, setFilterActive] = useState(false);
@@ -35,34 +30,28 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
   const [searchResults, setSearchResults] = useState<NewsArticles[]>([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  //initializing the dispatch function for redux
   const dispatch = useAppDispatch();
-  const filters = [
-    'Healthy',
-    'Technology',
-    'Finance',
-    'Arts',
-    'Sports',
-    'Politics',
-  ];
 
-  const sortOptions = [
-    'Recommended',
-    'Latest',
-    'Most Viewed',
-    'Channel',
-    'Following',
-  ];
+  //search filters
+  const filters = ['Healthy', 'Technology','Finance', 'Arts', 'Sports', 'Politics'];
 
+  //sort options
+  const sortOptions = [ 'Recommended', 'Latest', 'Most Viewed', 'Channel', 'Following'];
+
+  //function to trigger when any of the filter button is selected
   const onFilterSelect = () => {
     setFilterActive(true);
     setShowFilterModal(true);
   };
 
-  const onSave = () => {
+  //onModalClose, hide the modal
+  const onModalClose = () => {
     setShowFilterModal(false);
     setFilterActive(false);
   };
 
+  //function to fetch searched news
   const fetchSearchedNews = async () => {
     setIsSearching(true);
     try {
@@ -71,6 +60,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
       );
       const data = await response.json();
       setSearchResults(data.articles);
+      //on success store the search results in redux
       dispatch(storeSearchResultNews(data.articles));
     } catch (error) {
       Alert.alert('Sorry.. An error occured');
@@ -79,9 +69,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
     }
   };
 
-  // useEffect(() => {
-  //   fetchSearchedNews();
-  // }, []);
+  //onsubmit call the fetchSearch function
   const onSubmit = () => {
     fetchSearchedNews();
   };
@@ -92,6 +80,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.searchContainer}>
+            {/* search box */}
             <View style={styles.searchBox}>
               <TextInput
                 autoFocus={true}
@@ -109,7 +98,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
               </Pressable>
             </View>
           </View>
-          {/* filtered news card */}
+
           {/* filter buttons */}
           <View
             style={{
@@ -164,6 +153,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
               keyExtractor={item => item}
             />
           </View>
+
           {/* Search Results */}
           {searchResults?.length > 0 && (
             <>
@@ -193,6 +183,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
             </>
           )}
 
+         {/* loading indicator when making api call */}
           {isSearching && (
             <View
               style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
@@ -206,7 +197,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
             isVisible={showFilterModal}
             style={{margin: 0}}
             backdropOpacity={0.2}
-            onBackdropPress={onSave}>
+            onBackdropPress={onModalClose}>
             <View style={styles.modalContainer}>
               <View
                 style={{
@@ -237,7 +228,7 @@ const Search: FC<NativeStackScreenProps<RootStackParamList, 'search'>> = ({
                   ))}
                 </View>
               </View>
-              <Pressable onPress={onSave} style={styles.saveButton}>
+              <Pressable onPress={onModalClose} style={styles.saveButton}>
                 <Text style={styles.saveButtonText}>SAVE</Text>
               </Pressable>
             </View>

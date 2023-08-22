@@ -1,3 +1,4 @@
+// types for the nsvigation route
 export type RootStackParamList = {
     Home: undefined;
     feed:undefined;
@@ -5,6 +6,7 @@ export type RootStackParamList = {
     search:undefined
 }
 
+// types for data gotten from the api
 export type NewsArticles = {
     source:{
         id:string;

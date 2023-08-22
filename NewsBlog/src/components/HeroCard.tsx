@@ -6,7 +6,9 @@ import { NewsArticles, RootStackParamList } from '../types';
 const hero = require('../../assets/images/hero.png');
 import { StackNavigationProp } from '@react-navigation/stack';
 
+//card to display news in the latest news screen
 const HeroCard = ({data}:{data:NewsArticles}) => {
+  //initializing the navigation function
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (

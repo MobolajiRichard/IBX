@@ -21,12 +21,15 @@ export const newsSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
+    // store latest news
     storeLatestNews: (state, action: PayloadAction<NewsArticles[]>) => {
       state.latestNews = action.payload
     },
+    // store news from categories
     storeCategoryNews: (state, action: PayloadAction<NewsArticles[]>) => {
         state.categoryNews = action.payload
     },
+    // store news from search results
     storeSearchResultNews: (state, action: PayloadAction<NewsArticles[]>) => {
         state.searchResultNews = action.payload
     },

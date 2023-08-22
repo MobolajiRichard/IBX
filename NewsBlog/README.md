@@ -1,79 +1,44 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Welcome
+Good Day, My name is Oginni Mobolaji Richard, thanks for giving me the opportunity to showcase myself.
 
-# Getting Started
+------------------------------------------------------------------------------------
+listed belows are information about this app and instructions to run this application
+-------------------------------------------------------------------------------------
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+# App details
+This app was created using React Native Cli, listed below are the dependencies used and their purpose
+   "@react-navigation/native": "^6.1.7"  - For Navigation,
+    "@react-navigation/native-stack": "^6.9.13" - For Navigation ,
+    "@react-navigation/stack": "^6.3.17" - For Navigation ,
+    "@reduxjs/toolkit": "^1.9.5" - For App State Management,
+    "react-native-linear-gradient": "^2.8.2" - For gradients in the news card,
+    "react-native-modal": "^13.0.1" - For modal in the serch screen,
+    "react-native-safe-area-context": "^4.7.1" - React Navigation dependency,
+    "react-native-screens": "^3.24.0" - React Navigation dependency,
+    "react-native-svg": "13.4.0" - For icons,
+    "react-redux": "^8.1.2" - For App State Management,
+    "typescript": "4.8.4"  - For Type checking
 
-## Step 1: Start the Metro Server
+# Starting App
+To run app, after succcessfully cloning or downloading the source code on github, run the following code on the terminal:
+(Please a working enviroment is required to successfully run the app)
+- cd NewsBlog
+- yarn install (if using npm please delete the yarn.lock file and run npm install instead)
+- cd ios
+- pod install
+- cd ..
+- npm start
+- i (opens on iOS simulator) 
+- a (opens onAndroid simulator)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+# App Workflow
+- On successful lanuch,
+- App shows the home screen and news in two sections - Latest News and Categories Section
+- onPress of the see all, the app navigates to the Hot Updates section which shows all the news from the latest news
+- onPress of the search box, the app naviagtes to the search screen on text inputs and submit the app makes an api call to generate the search requests and displays them.
+- onPress of any of the cards the app naviagtes to the News Screen where users can see the full details of the news.
+- Some cards might not have an image background, this is due to the api returning some broken image links or some news have no cover images.
 
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# NB
+The api is limited by NewsApi.org and can only make 100 api calls in a day
+    

@@ -1,8 +1,6 @@
 import {
-  SafeAreaView,
   View,
   Text,
-  ImageBackground,
   StatusBar,
   StyleSheet,
   Image,
@@ -11,35 +9,46 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {RootStackParamList} from '../types';
+import {NewsArticles, RootStackParamList} from '../types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FC} from 'react';
+import {FC, useState} from 'react';
 import {COLORS, ICONS} from '../constant';
 import {useAppSelector} from '../../hooks/reduxHook';
-const hero = require('../../assets/images/hero.png');
 import LinearGradient from 'react-native-linear-gradient';
 
-const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
-  navigation,
-  route,
-}) => {
-  let news;
+const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({navigation,route}) => {
+  //state to hold the news to view
+  const [news, setNews] = useState<NewsArticles[] | null>([])
+
+  //retrieving the params passed to the routes
+  //newsId - To identify the news selected
+  //screen - To know the from where the news was selected from
   const {newsId, screen} = route.params;
+
+  //retrieving the right data from redux based on the screen it was selected from
+  //and storing it in state
   if (screen === 'latest') {
-    news = useAppSelector(state => state.news.latestNews);
+    setNews(useAppSelector(state => state.news.latestNews))
   } else if (screen === 'category') {
-    news = useAppSelector(state => state.news.categoryNews);
+    setNews(useAppSelector(state => state.news.categoryNews))
   } else {
-    news = useAppSelector(state => state.news.searchResultNews);
+    setNews(useAppSelector(state => state.news.searchResultNews))
   }
+
+  //Finding the particular news gotten from the store based on the newsId
   const article = news?.find(news => news.title === newsId);
 
   return (
     <View style={styles.container}>
+      {/* change the status bar text color to white */}
       <StatusBar barStyle={'light-content'} />
+
+      {/* Back Button */}
       <Pressable onPress={() => navigation.goBack()} style={styles.navigation}>
         <ICONS.Back />
       </Pressable>
+
+      {/* News cover image */}
       <View style={styles.imageContainer}>
         <Image
           source={{uri: article?.urlToImage}}
@@ -47,7 +56,10 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
           resizeMode="cover"
         />
       </View>
+
+
       <View style={styles.content}>
+         {/* news details box */}
         <LinearGradient
           colors={['rgba(192, 192, 192, 0.92)', 'rgba(245, 245, 245, 1)']}
           style={styles.details}>
@@ -56,12 +68,15 @@ const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'news'>> = ({
           <Text style={styles.publisher}>Published by {article?.author}</Text>
         </LinearGradient>
 
+       {/* favorite action button */}
         <Pressable
           onPress={() => Alert.alert('Added to Favorites')}
           style={styles.favorite}>
           <ICONS.FAB />
         </Pressable>
         <View style={{marginTop: '20%'}}></View>
+
+        {/* news content */}
         <ScrollView style={styles.newsContainer}>
           <Text style={styles.news}>{article?.content}</Text>
         </ScrollView>
@@ -107,7 +122,6 @@ const styles = StyleSheet.create({
   details: {
     height: '35%',
     width: '83%',
-    // backgroundColor: 'rgba(192, 192, 192, 0.9)',
     borderRadius: 16,
     justifyContent: 'space-around',
     paddingVertical: 16,

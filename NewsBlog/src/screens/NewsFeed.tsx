@@ -5,24 +5,14 @@ import {FC} from 'react';
 import {NewsFeedcard} from '../components';
 import { useAppSelector } from '../../hooks/reduxHook';
 
-const NewsFeeds: FC<
-  NativeStackScreenProps<RootStackParamList, 'feed'>
-> = () => {
+const NewsFeeds: FC<NativeStackScreenProps<RootStackParamList, 'feed'>> = () => {
 
+// retrieve the latest news stored in redux
  const latestNews = useAppSelector(state => state.news.latestNews)
 
-  const filters = [
-    'Healthy',
-    'Technology',
-    'Finance',
-    'Arts',
-    'Sports',
-    'Politics',
-  ];
-
-  console.log(latestNews, 'feed')
   return (
     <View style={styles.container}>
+      {/* rendering the news feed */}
       <FlatList
         data={latestNews}
         renderItem={({item}) => <NewsFeedcard data={item}/>}
